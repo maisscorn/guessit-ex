@@ -79,8 +79,8 @@ app.get('/', async (req, res, next) => {
     // Select the games that have been won (found_at is not null), best first:
     // the fewest attempts first, and among games with the same number of
     // attempts, the one found earliest first. Return only the top ten.
-    const leaderboardQuery = ''; // <-- IMPLEMENT ME
-
+    const leaderboardQuery =
+      'SELECT name, attempts, found_at FROM game WHERE found_at IS NOT NULL ORDER BY attempts ASC, found_at ASC LIMIT 10';
     // If the leaderboard cannot be loaded, for example because the database is
     // not running, the page is shown anyway and the error is printed in the
     // terminal. This way, the application can start without a database.
@@ -174,8 +174,7 @@ app.post('/games/:id/guesses', async (req, res, next) => {
       // Add one to the game's attempts. When the guess equals the secret, also
       // set found_at to the current time (NOW()); otherwise leave found_at
       // unchanged. The game to update is `game` (its ID is `game.id`).
-      const updateQuery = ''; // <-- IMPLEMENT ME
-      await db.query(updateQuery);
+      const updateQuery = `UPDATE game SET attempts = attempts + 1, found_at = CASE WHEN secret = ${guess} THEN NOW() ELSE found_at END WHERE id = '${game.id}'`; await db.query(updateQuery);
     }
 
     res.redirect('/games/' + game.id + '?guess=' + encodeURIComponent(req.body.guess || ''));
@@ -196,8 +195,7 @@ app.post('/games/:id/delete', async (req, res, next) => {
     // Give up.
     //
     // Delete `game` from the database (its ID is `game.id`).
-    const deleteQuery = ''; // <-- IMPLEMENT ME
-    await db.query(deleteQuery);
+    const deleteQuery = `DELETE FROM game WHERE id = '${game.id}'`; await db.query(deleteQuery);
 
     res.redirect('/');
   } catch (err) {

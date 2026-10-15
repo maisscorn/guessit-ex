@@ -10,7 +10,7 @@ const PORT = 3000;
 // The URL used to connect to the PostgreSQL database. It has the shape
 // postgresql://USER:PASSWORD@HOST:PORT/DATABASE. Change the password to match
 // the one you set when you ran schema.sql.
-const DATABASE_URL = 'postgresql://guessit:change-me-now@localhost:5432/guessit';
+const DATABASE_URL = 'postgresql://guessit:e4857121cf642faed216dbb46feb1d24@localhost:5432/guessit';
 
 // The colour used for the page's accent (buttons, title). Change it if you
 // like a different look.
